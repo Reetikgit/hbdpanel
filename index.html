@@ -417,133 +417,6 @@ The above copyright notice and this permission notice shall be included in all c
 
       // ref.on('value',gotData,errData);
 
-      
-
-      var janelaPopUp = new Object();
-      janelaPopUp.abre = function(id, classes, titulo, corpo, functionCancelar, functionEnviar, textoCancelar, textoEnviar){
-          var cancelar = (textoCancelar !== undefined)? textoCancelar: 'Cancel';
-          var enviar = (textoEnviar !== undefined)? textoEnviar: 'Ok';
-          classes += ' ';
-          var classArray = classes.split(' ');
-          classes = '';
-          classesFundo = '';
-          var classBot = '';
-          $.each(classArray, function(index, value){
-              switch(value){
-                  case 'alert' : classBot += ' alert '; break;
-                  case 'blue' : classesFundo += this + ' ';
-                  case 'green' : classesFundo += this + ' ';
-                  case 'red' : classesFundo += this + ' ';
-                  case 'white': classesFundo += this + ' ';
-                  case 'orange': classesFundo += this + ' ';
-                  case 'purple': classesFundo += this + ' ';
-                  default : classes += this + ' '; break;
-              }
-          });
-          var popFundo = '<div id="popFundo_' + id + '" class="popUpFundo ' + classesFundo + '"></div>'
-          var janela = '<div id="' + id + '" class="popUp ' + classes + '"><h1>' + titulo + "</h1><div><span>" + corpo + "</span></div><button class='puEnviar " + classBot + "' data-parent=" + id + " id='popupclick'>" + enviar + "</button></div>";
-          $("window, body").css('overflow', 'hidden');
-
-          $("body").append(popFundo);
-          $("body").append(janela);
-          $("body").append(popFundo);
-           //alert(janela);
-          $("#popFundo_" + id).fadeIn("fast");
-          $("#" + id).addClass("popUpEntrada");
-
-          $("#" + id + '_cancelar').on("click", function(){
-              if((functionCancelar !== undefined) && (functionCancelar !== '')){
-                  functionCancelar();
-
-              }else{
-                  janelaPopUp.fecha(id);
-              }
-          });
-          $("#" + id + '_enviar').on("click", function(){
-              if((functionEnviar !== undefined) && (functionEnviar !== '')){
-                  functionEnviar();
-              }else{
-                  janelaPopUp.fecha(id);
-              }
-          });
-
-      };
-      janelaPopUp.abre2 = function(id, classes, titulo, corpo, functionCancelar, functionEnviar, textoCancelar, textoEnviar){
-
-
-          var cancelar = (textoCancelar !== undefined)? textoCancelar: 'Cancel';
-          var enviar = (textoEnviar !== undefined)? textoEnviar: 'Ok';
-          classes += ' ';
-          var classArray = classes.split(' ');
-          classes = '';
-          classesFundo = '';
-          var classBot = '';
-          $.each(classArray, function(index, value){
-              switch(value){
-                  case 'alert' : classBot += ' alert '; break;
-                  case 'blue' : classesFundo += this + ' ';
-                  case 'green' : classesFundo += this + ' ';
-                  case 'red' : classesFundo += this + ' ';
-                  case 'white': classesFundo += this + ' ';
-                  case 'orange': classesFundo += this + ' ';
-                  case 'purple': classesFundo += this + ' ';
-                  default : classes += this + ' '; break;
-              }
-          });
-          var popFundo = '<div id="popFundo_' + id + '" class="popUpFundo ' + classesFundo + '"></div>'
-          var janela = '<div id="' + id + '" class="popUp ' + classes + '"><h1>' + titulo + "</h1><div><span>" + corpo + "</span></div></div>";
-          $("window, body").css('overflow', 'hidden');
-
-          $("body").append(popFundo);
-          $("body").append(janela);
-          $("body").append(popFundo);
-           //alert(janela);
-          $("#popFundo_" + id).fadeIn("fast");
-          $("#" + id).addClass("popUpEntrada");
-
-          $("#" + id + '_cancelar').on("click", function(){
-              if((functionCancelar !== undefined) && (functionCancelar !== '')){
-                  functionCancelar();
-
-              }else{
-                  janelaPopUp.fecha(id);
-              }
-          });
-          $("#" + id + '_enviar').on("click", function(){
-              if((functionEnviar !== undefined) && (functionEnviar !== '')){
-                  functionEnviar();
-              }else{
-                  janelaPopUp.fecha(id);
-              }
-          });
-
-      };
-      janelaPopUp.fecha = function(id){
-          if(id !== undefined){
-              $("#" + id).removeClass("popUpEntrada").addClass("popUpSaida");
-
-                  $("#popFundo_" + id).fadeOut(1000, function(){
-                      $("#popFundo_" + id).remove();
-                      $("#" + $(this).attr("id") + ", #" + id).remove();
-                      if (!($(".popUp")[0])){
-                          $("window, body").css('overflow', 'auto');
-                      }
-                  });
-
-
-          }
-          else{
-              $(".popUp").removeClass("popUpEntrada").addClass("popUpSaida");
-
-                  $(".popUpFundo").fadeOut(1000, function(){
-                      $(".popUpFundo").remove();
-                      $(".popUp").remove();''
-                      $("window, body").css('overflow', 'auto');
-                  });
-
-
-          }
-      }
   </script>
 
 
@@ -649,7 +522,8 @@ The above copyright notice and this permission notice shall be included in all c
             var url="";
               var reader = new FileReader()
               reader.onload = function(event) {
-                if(event.target.result.includes("mp4")){
+                
+                if(event.target.result.includes("video/mp4")){
                   url="https://cdn0.iconfinder.com/data/icons/multimedia-icons-5/100/video-512.png"
                 }
                 else{
@@ -686,11 +560,11 @@ The above copyright notice and this permission notice shall be included in all c
 
               
               for(var i = 0; i < images.length; i++) {
-                pushdata(i);
+                pushdata();
               }
-              var imgurl,url2="";
-              var z=0;
-              function pushdata(i){
+              var imgurl,url2;
+              var z=0,p=0;
+              function pushdata(){
                 
                 let nam =document.querySelector('#name').value;
                 let msg =document.querySelector('#description').value;
@@ -723,17 +597,20 @@ The above copyright notice and this permission notice shall be included in all c
                         }, function() {
                     document.getElementById("demo").innerHTML = "Uploaded"+ " "+progress+"%";
                     uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-                    console.log('File available at', downloadURL);
+                   
                     urls = downloadURL;
-                    
-
-                    if(urls.includes("mp4")){
+                    alert(selectedFileName[i])
+                    if(urls.includes(".mp4")){
+                      z++;
+                      alert(z)
                       url2=urls;
                     }else{
+                      p++;
+                      alert(p)
                       imgurl=urls;
                     }
                    
-                   if(i==1){
+                   if(z==1&&p==1){
                      sendD(imgurl,url2,nam,msg)
                    }
                   });
