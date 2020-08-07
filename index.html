@@ -523,7 +523,7 @@ The above copyright notice and this permission notice shall be included in all c
               var reader = new FileReader()
               reader.onload = function(event) {
                 
-                if(event.target.result.includes("video/mp4")){
+                if(event.target.result.includes("video/mp4")||event.target.result.includes("video/quicktime")){
                   url="https://cdn0.iconfinder.com/data/icons/multimedia-icons-5/100/video-512.png"
                 }
                 else{
@@ -600,7 +600,7 @@ The above copyright notice and this permission notice shall be included in all c
                    
                     urls = downloadURL;
                     
-                    if(urls.includes(".mp4")){
+                    if(urls.includes(".mp4")||urls.includes(".MOV")){
                       z++;
                       
                       url2=urls;
